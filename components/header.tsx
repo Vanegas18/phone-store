@@ -31,17 +31,7 @@ export function Header() {
             href="/catalogo"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Catalogo
-          </Link>
-          <Link
-            href="/#beneficios"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
-            Beneficios
-          </Link>
-          <Link
-            href="/#contacto"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
-            Contacto
-          </Link>
+          </Link> 
         </nav>
 
         <div className="hidden md:block">
@@ -85,18 +75,6 @@ export function Header() {
               className="text-base font-medium text-foreground"
               onClick={() => setIsMenuOpen(false)}>
               Catalogo
-            </Link>
-            <Link
-              href="/#beneficios"
-              className="text-base font-medium text-foreground"
-              onClick={() => setIsMenuOpen(false)}>
-              Beneficios
-            </Link>
-            <Link
-              href="/#contacto"
-              className="text-base font-medium text-foreground"
-              onClick={() => setIsMenuOpen(false)}>
-              Contacto
             </Link>
             <Button
               asChild

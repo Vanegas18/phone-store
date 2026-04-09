@@ -34,9 +34,13 @@ function getConditionLabel(condition: Product["condition"]) {
   }
 }
 
+function formatPrice(price: string | number) {
+  return Number(price).toLocaleString("es-CO");
+}
+
 export function ProductCard({ product }: ProductCardProps) {
   const whatsappMessage = encodeURIComponent(
-    `Hola, me interesa el ${product.name} (${product.storage}) - ${getConditionLabel(product.condition)} a $${product.price}. Pueden darme mas informacion?`,
+    `Hola, me interesa el ${product.name} (${product.storage}) - ${getConditionLabel(product.condition)} a $${formatPrice(product.price)}. Pueden darme mas informacion?`,
   );
 
   return (
@@ -46,7 +50,17 @@ export function ProductCard({ product }: ProductCardProps) {
         href={`/producto/${product.id}`}
         className="relative aspect-square overflow-hidden bg-muted">
         <div className="flex h-full items-center justify-center">
-          <Smartphone className="h-24 w-24 text-muted-foreground/40 transition-transform group-hover:scale-110" />
+          {product.images && product.images.length > 0 ? (
+            <img
+              src={product.images[0]}
+              alt={product.name}
+              className="h-full w-full object-cover transition-transform group-hover:scale-105"
+            />
+          ) : (
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted">
+              <Smartphone className="h-8 w-8 text-muted-foreground" />
+            </div>
+          )}
         </div>
         <Badge
           className={`absolute left-3 top-3 ${getConditionBadgeStyles(product.condition)}`}>
@@ -56,7 +70,11 @@ export function ProductCard({ product }: ProductCardProps) {
           <Badge
             variant="secondary"
             className="absolute right-3 top-3 bg-destructive text-white">
-            -{Math.round((1 - product.price / product.originalPrice) * 100)}%
+            -
+            {Math.round(
+              (1 - Number(product.price) / Number(product.originalPrice)) * 100,
+            )}
+            %
           </Badge>
         )}
       </Link>
@@ -86,11 +104,11 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="mt-auto pt-4">
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold text-foreground">
-              ${product.price}
+              ${formatPrice(product.price)}
             </span>
             {product.originalPrice && (
               <span className="text-sm text-muted-foreground line-through">
-                ${product.originalPrice}
+                ${formatPrice(product.originalPrice)}
               </span>
             )}
           </div>

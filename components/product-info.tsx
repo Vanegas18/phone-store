@@ -7,6 +7,10 @@ interface ProductInfoProps {
   product: Product;
 }
 
+function formatPrice(price: string | number) {
+  return Number(price).toLocaleString("es-CO");
+}
+
 function getConditionLabel(condition: Product["condition"]) {
   switch (condition) {
     case "nuevo":
@@ -22,7 +26,7 @@ function getConditionLabel(condition: Product["condition"]) {
 
 export function ProductInfo({ product }: ProductInfoProps) {
   const whatsappMessage = encodeURIComponent(
-    `Hola, me interesa comprar el ${product.name} (${product.storage}) - ${getConditionLabel(product.condition)} a $${product.price}. Esta disponible?`,
+    `Hola, me interesa comprar el ${product.name} (${product.storage}) - ${getConditionLabel(product.condition)} a $${formatPrice(product.price)}. Esta disponible?`,
   );
 
   return (
@@ -42,11 +46,11 @@ export function ProductInfo({ product }: ProductInfoProps) {
       {/* Price */}
       <div className="mt-4 flex items-baseline gap-3">
         <span className="text-3xl font-bold text-foreground sm:text-4xl">
-          ${product.price}
+          ${formatPrice(product.price)}
         </span>
         {product.originalPrice && (
           <span className="text-lg text-muted-foreground line-through">
-            ${product.originalPrice}
+            ${formatPrice(product.originalPrice)}
           </span>
         )}
       </div>

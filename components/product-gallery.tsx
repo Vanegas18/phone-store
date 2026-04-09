@@ -37,24 +37,29 @@ function getConditionLabel(condition: Product["condition"]) {
 
 export function ProductGallery({ product }: ProductGalleryProps) {
   const [selectedImage, setSelectedImage] = useState(0);
-
-  // Simulate multiple images for gallery effect
-  const images = [
-    { id: 0, label: "Frontal" },
-    { id: 1, label: "Trasera" },
-    { id: 2, label: "Lateral" },
-    { id: 3, label: "Detalle" },
-  ];
+  const images = product.images ?? [];
 
   return (
     <div className="flex flex-col gap-4">
       {/* Main Image */}
       <div className="relative aspect-square overflow-hidden rounded-2xl border border-border bg-muted">
         <div className="flex h-full items-center justify-center">
-          <Smartphone className="h-48 w-48 text-muted-foreground/30" />
+          {images.length > 0 ? (
+            <img
+              src={images[selectedImage]}
+              alt={product.name}
+              className="h-full w-full object-cover"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+                e.currentTarget.nextElementSibling?.classList.remove("hidden");
+              }}
+            />
+          ) : null}
+          <Smartphone
+            className={`h-48 w-48 text-muted-foreground/30 ${images.length > 0 ? "hidden" : ""}`}
+          />
         </div>
 
-        {/* Badges */}
         <Badge
           className={`absolute left-4 top-4 ${getConditionBadgeStyles(product.condition)}`}>
           {getConditionLabel(product.condition)}
@@ -64,45 +69,41 @@ export function ProductGallery({ product }: ProductGalleryProps) {
           <Badge
             variant="secondary"
             className="absolute right-4 top-4 bg-destructive text-white">
-            -{Math.round((1 - product.price / product.originalPrice) * 100)}%
-            OFF
+            -
+            {Math.round(
+              (1 - Number(product.price) / Number(product.originalPrice)) * 100,
+            )}
+            % OFF
           </Badge>
         )}
 
-        {/* Zoom hint */}
         <div className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-card/80 text-muted-foreground backdrop-blur-sm">
           <ZoomIn className="h-5 w-5" />
         </div>
+      </div>
 
-        {/* Image label */}
-        <div className="absolute bottom-4 left-4 rounded-full bg-card/80 px-3 py-1 text-sm font-medium text-foreground backdrop-blur-sm">
-          Vista {images[selectedImage].label}
+      {/* Thumbnails — solo si hay más de 1 imagen */}
+      {images.length > 1 && (
+        <div className="grid grid-cols-4 gap-3">
+          {images.map((src, index) => (
+            <button
+              key={index}
+              onClick={() => setSelectedImage(index)}
+              className={`relative aspect-square overflow-hidden rounded-xl border-2 bg-muted transition-all ${
+                selectedImage === index
+                  ? "border-accent"
+                  : "border-transparent hover:border-border"
+              }`}
+              aria-label={`Ver imagen ${index + 1}`}>
+              <img
+                src={src}
+                alt={`${product.name} - imagen ${index + 1}`}
+                className="h-full w-full object-cover"
+              />
+            </button>
+          ))}
         </div>
-      </div>
-
-      {/* Thumbnails */}
-      <div className="grid grid-cols-4 gap-3">
-        {images.map((image) => (
-          <button
-            key={image.id}
-            onClick={() => setSelectedImage(image.id)}
-            className={`relative aspect-square overflow-hidden rounded-xl border-2 bg-muted transition-all ${
-              selectedImage === image.id
-                ? "border-accent"
-                : "border-transparent hover:border-border"
-            }`}
-            aria-label={`Ver imagen ${image.label}`}>
-            <div className="flex h-full items-center justify-center">
-              <Smartphone className="h-8 w-8 text-muted-foreground/30" />
-            </div>
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent px-2 py-1">
-              <span className="text-xs font-medium text-white">
-                {image.label}
-              </span>
-            </div>
-          </button>
-        ))}
-      </div>
+      )}
     </div>
   );
 }

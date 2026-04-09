@@ -67,7 +67,10 @@ export default function CatalogPage() {
       // Price range filter
       if (filters.priceRange !== "all") {
         const [min, max] = filters.priceRange.split("-").map(Number);
-        if (product.price < min || (max !== Infinity && product.price > max)) {
+        if (
+          Number(product.price) < min ||
+          (max !== Infinity && Number(product.price) > max)
+        ) {
           return false;
         }
       }
@@ -115,17 +118,6 @@ export default function CatalogPage() {
               onClearFilters={handleClearFilters}
               activeFiltersCount={activeFiltersCount}
             />
-          </div>
-
-          {/* Results Count */}
-          <div className="mb-6 flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">
-              Mostrando{" "}
-              <span className="font-medium text-foreground">
-                {filteredProducts.length}
-              </span>{" "}
-              {filteredProducts.length === 1 ? "producto" : "productos"}
-            </p>
           </div>
 
           {/* Product Grid */}

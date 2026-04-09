@@ -40,20 +40,6 @@ export function Footer() {
                   Catalogo
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/#beneficios"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Beneficios
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#contacto"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Contacto
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -64,15 +50,15 @@ export function Footer() {
               <li className="flex items-start gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">
-                  Centro Comercial Plaza Norte
+                  Centro Comercial Fundadores
                   <br />
-                  Local 25, Planta Baja
+                  Local 25, CelularesPlus
                 </span>
               </li>
               <li className="flex items-center gap-2">
                 <Clock className="h-4 w-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">
-                  Lun - Sab: 10:00 - 20:00
+                  Lun - Sab: 10:00 a.m. - 08:00 p.m.
                 </span>
               </li>
             </ul>
@@ -80,7 +66,7 @@ export function Footer() {
 
           {/* Social */}
           <div>
-            <h3 className="font-semibold text-foreground">Siguenos</h3>
+            <h3 className="font-semibold text-foreground">Síguenos</h3>
             <div className="mt-4 flex gap-4">
               <a
                 href="https://instagram.com"
@@ -100,7 +86,7 @@ export function Footer() {
               </a>
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
-              WhatsApp: +1 234 567 890
+              WhatsApp: +57 324 272 6183
             </p>
           </div>
         </div>
